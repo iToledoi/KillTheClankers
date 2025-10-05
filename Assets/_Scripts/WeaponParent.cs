@@ -8,6 +8,11 @@ public class WeaponParent : MonoBehaviour
 
     public Vector2 PointerPosition { get; set; }
 
+    public Animator animator;
+
+    public float meleeDelay = 0.3f;
+    private bool attackBlocked = false;
+
     private void Update()
     {   
         //Gets position of mouse pointer for direction weapon should be facing
@@ -33,5 +38,22 @@ public class WeaponParent : MonoBehaviour
         {
             weaponRenderer.sortingOrder = characterRenderer.sortingOrder + 1;
         }
+    }
+
+    public void MeleeAttack()
+    {
+        if (attackBlocked)
+        {
+            return;
+        }
+        animator.SetTrigger("Attack");
+        attackBlocked = true;
+        StartCoroutine(DelayAttack());
+    }
+
+    private IEnumerator DelayAttack()
+    {
+        yield return new WaitForSeconds(meleeDelay);
+        attackBlocked = false;
     }
 }

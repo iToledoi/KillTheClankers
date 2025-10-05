@@ -2,34 +2,6 @@
     "name": "New Controls",
     "maps": [
         {
-            "name": "Pause",
-            "id": "c2f6cd13-9897-44e4-8763-d5a04b50b9ff",
-            "actions": [
-                {
-                    "name": "1",
-                    "type": "Button",
-                    "id": "974fa1b2-1425-4d0f-b25b-38a9daee536a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "a2f6d8a5-fad8-49e0-8a77-a96c966ddde2",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "PlayerInput",
             "id": "f063a4e2-026a-483c-8c2c-f4ec756a78f8",
             "actions": [

@@ -9,10 +9,26 @@ public class Player : MonoBehaviour
     private Vector2 pointerInput;
 
     [SerializeField]
-    private InputActionReference pointerPosition;
+    private InputActionReference meleeAttack, pointerPosition;
 
     private WeaponParent weaponParent;
     
+
+    private void OnEnable()
+    {
+        meleeAttack.action.performed += PerformAttack;
+    }
+
+    private void OnDisable()
+    {
+        meleeAttack.action.performed -= PerformAttack;
+    }
+
+    private void PerformAttack(InputAction.CallbackContext obj)
+    {
+        weaponParent.MeleeAttack();
+    }
+
     private void Awake()
     {
         weaponParent = GetComponentInChildren<WeaponParent>();
@@ -23,7 +39,15 @@ public class Player : MonoBehaviour
     {
         pointerInput = GetPointerInput();
         weaponParent.PointerPosition = pointerInput;
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    weaponParent.MeleeAttack();
+        //}
+
     }
+
+    //Function gets mouse input from user to determine where character faces
     private Vector2 GetPointerInput()
     {
         Vector3 mousePos = pointerPosition.action.ReadValue<Vector2>();
