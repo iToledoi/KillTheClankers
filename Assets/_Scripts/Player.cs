@@ -40,11 +40,6 @@ public class Player : MonoBehaviour
         pointerInput = GetPointerInput();
         weaponParent.PointerPosition = pointerInput;
 
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    weaponParent.MeleeAttack();
-        //}
-
     }
 
     //Function gets mouse input from user to determine where character faces

@@ -38,14 +38,14 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.05
         value: {x: 0, y: 0, z: -120.5}
-        inSlope: {x: 0, y: 0, z: -2699.9998}
-        outSlope: {x: 0, y: 0, z: -2699.9998}
+        inSlope: {x: 0, y: 0, z: -1800}
+        outSlope: {x: 0, y: 0, z: -1800}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.06666667
+        time: 0.083333336
         value: {x: 0, y: 0, z: -160}
         inSlope: {x: 0, y: 0, z: -800}
         outSlope: {x: 0, y: 0, z: -800}
@@ -76,7 +76,7 @@ AnimationClip:
       value: {fileID: -5177388603050735206, guid: 2f0137eef2bb78e46b691220f10c77d9, type: 3}
     - time: 0.033333335
       value: {fileID: -5177388603050735206, guid: 2f0137eef2bb78e46b691220f10c77d9, type: 3}
-    - time: 0.06666667
+    - time: 0.083333336
       value: {fileID: -5177388603050735206, guid: 2f0137eef2bb78e46b691220f10c77d9, type: 3}
     - time: 0.1
       value: {fileID: -5177388603050735206, guid: 2f0137eef2bb78e46b691220f10c77d9, type: 3}
@@ -203,14 +203,14 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.05
         value: -120.5
-        inSlope: -2699.9998
-        outSlope: -2699.9998
+        inSlope: -1800
+        outSlope: -1800
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.06666667
+        time: 0.083333336
         value: -160
         inSlope: -800
         outSlope: -800
@@ -274,4 +274,18 @@ AnimationClip:
     flags: 0
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.05
+    functionName: TriggerAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.1
+    functionName: TriggerEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
