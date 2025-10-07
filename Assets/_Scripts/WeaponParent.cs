@@ -13,8 +13,25 @@ public class WeaponParent : MonoBehaviour
     public float meleeDelay = 0.3f;
     private bool attackBlocked = false;
 
+    public Transform circleOrigin;
+    public float radius;
+
+    //Property
+    public bool IsAttacking {  get; set; }
+
+    public void ResetIsAttacking()
+    {
+        IsAttacking = false;
+    }
+
     private void Update()
     {   
+        //Don't want weapon to change animation position when attacking
+        if(IsAttacking)
+        {
+            return;
+        }
+
         //Gets position of mouse pointer for direction weapon should be facing
         Vector2 direction = (PointerPosition - (Vector2)transform.position).normalized;
         transform.right = direction;
@@ -47,6 +64,7 @@ public class WeaponParent : MonoBehaviour
             return;
         }
         animator.SetTrigger("Attack");
+        IsAttacking = true;
         attackBlocked = true;
         StartCoroutine(DelayAttack());
     }
@@ -55,5 +73,26 @@ public class WeaponParent : MonoBehaviour
     {
         yield return new WaitForSeconds(meleeDelay);
         attackBlocked = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Vector3 position = circleOrigin == null ? Vector3.zero : circleOrigin.position;
+        Gizmos.DrawWireSphere(position, radius);
+    }
+
+    public void DetectColliders()
+    {
+        foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrigin.position, radius))
+        {
+            //Debug.Log(collider.name);
+
+            Health health;
+            if(health = collider.GetComponent<Health>())
+            {
+                health.GetHit(1, transform.parent.gameObject);
+            }
+        }
     }
 }
