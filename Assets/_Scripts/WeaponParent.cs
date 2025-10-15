@@ -10,6 +10,7 @@ public class WeaponParent : MonoBehaviour
 
     public Animator animator;
 
+    public float rangedDelay = 2f;
     public float meleeDelay = 0.3f;
     private bool attackBlocked = false;
 
@@ -57,6 +58,17 @@ public class WeaponParent : MonoBehaviour
         }
     }
 
+    public void RangedAttack()
+    {
+        if (attackBlocked)
+        {
+            return;
+        }
+        //animator.SetTrigger("RangedAttack");
+        IsAttacking = true;
+        attackBlocked = true;
+        StartCoroutine(DelayRangedAttack());
+    }
     public void MeleeAttack()
     {
         if (attackBlocked)
@@ -67,6 +79,12 @@ public class WeaponParent : MonoBehaviour
         IsAttacking = true;
         attackBlocked = true;
         StartCoroutine(DelayAttack());
+    }
+
+    private IEnumerator DelayRangedAttack()
+    {
+        yield return new WaitForSeconds(rangedDelay);
+        attackBlocked = false;
     }
 
     private IEnumerator DelayAttack()
