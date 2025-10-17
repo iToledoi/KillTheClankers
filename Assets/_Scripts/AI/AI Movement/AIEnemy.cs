@@ -5,6 +5,29 @@ public class AIEnemy : MonoBehaviour
 {
     private NavMeshAgent agent;
     public Transform player;
+    private WeaponParentAI weaponParent;
+
+    [SerializeField]
+    private bool ranged = true;
+    [SerializeField]
+    private float attackRange;
+
+    private void Awake()
+    {
+        weaponParent = GetComponentInChildren<WeaponParentAI>();
+    }
+
+    private void PerformAttack()
+    {
+        if (ranged == true)
+        {
+            weaponParent.RangedAttack();
+        }
+        else
+        {
+            weaponParent.MeleeAttack();
+        }
+    }
 
     void Start()
     {
@@ -21,6 +44,11 @@ public class AIEnemy : MonoBehaviour
             // Continuously update the destination
             agent.SetDestination(player.position);
 
+            float distanceFromPlayer = Vector2.Distance(player.position,transform.position);
+            if (distanceFromPlayer < attackRange)
+            {
+                PerformAttack();
+            }
             
         }
 
