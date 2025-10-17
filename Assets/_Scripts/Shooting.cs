@@ -26,4 +26,24 @@ public class Shooting : MonoBehaviour
         // Destroy bullet after 2 seconds to prevent clutter
         Destroy(this.gameObject, 4f);
     }
+
+    // Called automatically when bullet collides with something (with collider)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Ignore collisions with other bullets or the shooter if needed
+        if (collision.CompareTag("Enemy"))
+            return;
+
+        // Try to find a Health component on what we hit
+        Health health = collision.GetComponent<Health>();
+        if (health != null)
+        {
+            health.GetHit(1, gameObject);
+        }
+
+        // Destroy the bullet after collision
+        Destroy(this.gameObject);
+    }
+
+
 }
