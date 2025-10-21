@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class AnimationEventHelper : MonoBehaviour
 {
-    public UnityEvent OnAnimationEventTriggered, OnMeleeAttackPerformed, OnRangedAttackPerformed;
+    public UnityEvent OnAnimationEventTriggered, OnMeleeAttackPerformed, OnRangedAttackPerformed, OnEnemyDeath;
 
     public void TriggerEvent()
     {
@@ -20,5 +20,10 @@ public class AnimationEventHelper : MonoBehaviour
     public void TriggerRangedAttack()
     {
         OnRangedAttackPerformed?.Invoke();
+    }
+
+    public void TriggerEnemyDeath()
+    {
+        OnEnemyDeath?.Invoke();
     }
 }
