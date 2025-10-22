@@ -7,6 +7,10 @@ public class Shooting : MonoBehaviour
     public Transform target;
     public float speed = 5f;
     private Rigidbody2D bulletRB;
+    // When true the bullet can damage enemies (used for reflected bullets)
+    public bool canDamageEnemies = false;
+    // optional owner reference
+    public GameObject owner;
 
     void Start()
     {
@@ -30,15 +34,17 @@ public class Shooting : MonoBehaviour
     // Called automatically when bullet collides with something (with collider)
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Ignore collisions with other bullets or the shooter if needed
-        if (collision.CompareTag("Enemy"))
+        // Ignore collisions with enemies if this bullet isn't allowed to damage them
+        if (collision.CompareTag("Enemy") && !canDamageEnemies)
             return;
 
         // Try to find a Health component on what we hit
         Health health = collision.GetComponent<Health>();
         if (health != null)
         {
-            health.GetHit(1, gameObject);
+            // If this bullet was reflected and has an owner, attribute damage to the owner (e.g. player)
+            GameObject sender = owner != null ? owner : gameObject;
+            health.GetHit(1, sender);
         }
 
         // Destroy the bullet after collision
