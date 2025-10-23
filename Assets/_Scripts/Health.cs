@@ -22,6 +22,7 @@ public class Health : MonoBehaviour
 
     public void GetHit(int amount, GameObject sender)
     {
+
         if (isDead)
             return;
         if (sender.layer == gameObject.layer)
@@ -37,7 +38,7 @@ public class Health : MonoBehaviour
         {
             OnDeathWithReference?.Invoke(sender);
             isDead = true;
-            Destroy(gameObject);
+            Destroy(gameObject, 1.5f);
         }
     }
 }
