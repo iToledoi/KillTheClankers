@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,6 +12,7 @@ public class AIEnemy : MonoBehaviour
     private bool ranged = true;
     [SerializeField]
     private float attackRange;
+    private bool isDead = false;
 
     private void Awake()
     {
@@ -53,6 +55,11 @@ public class AIEnemy : MonoBehaviour
 
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
+        
         // keep weapon parent's player reference in sync and try to find player if lost
         if (player == null)
         {
@@ -70,13 +77,18 @@ public class AIEnemy : MonoBehaviour
             // Continuously update the destination
             agent.SetDestination(player.position);
 
-            float distanceFromPlayer = Vector2.Distance(player.position,transform.position);
+            float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
             if (distanceFromPlayer < attackRange)
             {
                 PerformAttack();
             }
-            
+
         }
 
+    }
+
+    private void killEnemy()
+    {
+        isDead = true;
     }
 }
