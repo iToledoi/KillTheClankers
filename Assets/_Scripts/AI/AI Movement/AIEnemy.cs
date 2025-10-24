@@ -13,12 +13,16 @@ public class AIEnemy : MonoBehaviour
     [SerializeField]
     private float attackRange;
     private bool isDead = false;
+    [SerializeField]
+    private AudioClip[] deathSounds;
 
+    // Get weapon parent component
     private void Awake()
     {
         weaponParent = GetComponentInChildren<WeaponParentAI>();
     }
 
+    // Perform attack based on whether the enemy is ranged or melee
     private void PerformAttack()
     {
         if (ranged == true)
@@ -55,11 +59,12 @@ public class AIEnemy : MonoBehaviour
 
     void Update()
     {
+        // Do nothing if dead (stops dead enemies from moving or attacking)
         if (isDead)
         {
             return;
         }
-        
+
         // keep weapon parent's player reference in sync and try to find player if lost
         if (player == null)
         {
@@ -72,6 +77,7 @@ public class AIEnemy : MonoBehaviour
             }
         }
 
+        // If player exists, move towards them
         if (player != null)
         {
             // Continuously update the destination
@@ -87,8 +93,10 @@ public class AIEnemy : MonoBehaviour
 
     }
 
+    // Called to mark the enemy as dead
     private void killEnemy()
     {
         isDead = true;
+        SoundFXManager.instance.PlayRandomSound(deathSounds, transform, 1f);
     }
 }

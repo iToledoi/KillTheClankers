@@ -117,6 +117,8 @@ MonoBehaviour:
   player: {fileID: 0}
   ranged: 1
   attackRange: 15
+  deathSounds:
+  - {fileID: 8300000, guid: 152c17a1d5564b14bba19f47dc08f210, type: 3}
 --- !u!114 &4059783821794107933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,9 +474,11 @@ MonoBehaviour:
   player: {fileID: 0}
   animator: {fileID: 6884073009570066509}
   rangedDelay: 2
-  rangedFireRate: 3
   bullet: {fileID: 7778960679255396125, guid: f160ca817b7cfae4faee4e2030f30f91, type: 3}
   shooting: {fileID: 9158560873002974305}
+  gunSounds:
+  - {fileID: 8300000, guid: 93423b0d2ee97b24fb227c57952f5c20, type: 3}
+  - {fileID: 8300000, guid: 060e9520285b1994ca329380cac7c15a, type: 3}
   meleeDelay: 0.3
   circleOrigin: {fileID: 541565314027983316}
   radius: 0.1

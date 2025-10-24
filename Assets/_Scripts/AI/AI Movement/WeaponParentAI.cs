@@ -11,16 +11,18 @@ public class WeaponParentAI : MonoBehaviour
     public Animator animator;
 
     public float rangedDelay = 2f;
-    public float rangedFireRate = 1f;
     public GameObject bullet;
     public GameObject shooting;
+    [SerializeField]
+    private AudioClip[] gunSounds;
+
     public float meleeDelay = 0.3f;
     private bool attackBlocked = false;
 
     public Transform circleOrigin;
     public float radius;
 
-    //Property
+    //Property to check if the weapon is currently attacking
     public bool IsAttacking { get; set; }
 
     public void ResetIsAttacking()
@@ -79,6 +81,10 @@ public class WeaponParentAI : MonoBehaviour
         IsAttacking = true;
         attackBlocked = true;
         GameObject newBullet = Instantiate(bullet, shooting.transform.position, shooting.transform.rotation);
+
+        //play ranged attack sounds here
+        SoundFXManager.instance.PlayRandomSound(gunSounds, transform, 1f);
+            
         Shooting bulletScript = newBullet.GetComponent<Shooting>();
         if (bulletScript != null)
         {

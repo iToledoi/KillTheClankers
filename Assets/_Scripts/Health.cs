@@ -12,7 +12,10 @@ public class Health : MonoBehaviour
 
     [SerializeField]
     private bool isDead = false;
+    [SerializeField]
+    private AudioClip[] playerDeathSounds;
 
+    // Initializes health values
     public void InitializeHealth(int healthValue)
     {
         currentHealth = healthValue;
@@ -20,6 +23,7 @@ public class Health : MonoBehaviour
         isDead = false;
     }
 
+    // Amount is damage subtracted from health, if health <= 0, object is destroyed
     public void GetHit(int amount, GameObject sender)
     {
 
@@ -37,8 +41,13 @@ public class Health : MonoBehaviour
         else
         {
             OnDeathWithReference?.Invoke(sender);
+            //if player death, play death sound
+            if (gameObject.CompareTag("Player"))
+            {
+                SoundFXManager.instance.PlayRandomSound(playerDeathSounds, transform, 5f);
+            }
             isDead = true;
-            Destroy(gameObject, 1.5f);
+            Destroy(gameObject, 0.4f);
         }
     }
 }
