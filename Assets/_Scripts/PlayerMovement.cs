@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     public float dashingTime = 0.2f;
     public float dashingCooldown = 1.5f;
 
+    [SerializeField]
+    private AudioClip dashSound;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -38,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canDash)
         {
             Debug.Log("Dashing");
+            // Play dash sound
+            SoundFXManager.instance.PlaySound(dashSound, transform, 2f);
             StartCoroutine(Dash());
         }
     }
@@ -55,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
     {
         canDash = false;
         isDashing = true;
-
         rb.velocity = lastMoveDir * dashingPower;
         yield return new WaitForSeconds(dashingTime);
         isDashing = false;

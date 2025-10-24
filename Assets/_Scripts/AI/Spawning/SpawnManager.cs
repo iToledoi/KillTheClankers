@@ -19,40 +19,45 @@ public class SpawnManager : MonoBehaviour
 
     private GameObject player;
 
+    //Get player reference on start
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(SpawnWaveLoop());
     }
 
+    // Main wave spawning loop
     IEnumerator SpawnWaveLoop()
     {
         while (true)
         {
-            // Wait for any current wave to finish
-            while (isSpawning || enemiesAlive > 0)
-                yield return null;
+            //End the loop if the player is dead
+            if (player == null)
+            {
+                yield break;
+            }
 
-            // Wait between waves for pacing
+            // Wait for waveBreajkDuration before starting next wave
             yield return new WaitForSeconds(waveBreakDuration);
 
             currentWave++;
             enemiesKilled = 0;
             isSpawning = true;
 
-            Debug.Log($"🌊 Starting Wave {currentWave}");
+            Debug.Log($"Starting Wave {currentWave}");
 
-            // Spawn the wave
+            // Spawn wave
             for (int i = 0; i < enemiesPerWave; i++)
             {
                 SpawnEnemy();
                 yield return new WaitForSeconds(spawnDelay);
             }
-
+            enemiesPerWave += 2; // Increase difficulty each wave
             isSpawning = false;
         }
     }
 
+    // Spawn a single enemy at a random spawn point
     void SpawnEnemy()
     {
         if (spawnPoints.Length == 0 || enemyPrefab == null) return;
@@ -73,7 +78,7 @@ public class SpawnManager : MonoBehaviour
         enemiesAlive--;
         enemiesKilled++;
 
-        // Optional: only spawn next wave early if all are dead
+        // only spawn next wave early if all are dead
         if (enemiesAlive <= 0)
         {
             Debug.Log("All enemies defeated! Preparing next wave...");

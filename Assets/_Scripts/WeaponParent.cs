@@ -14,6 +14,9 @@ public class WeaponParent : MonoBehaviour
     public float meleeDelay = 0.3f;
     private bool attackBlocked = false;
 
+    [SerializeField]
+    private AudioClip[] swordSounds;
+
     public Transform circleOrigin;
     public float radius;
 
@@ -75,6 +78,8 @@ public class WeaponParent : MonoBehaviour
         {
             return;
         }
+        //play melee attack sounds here
+        SoundFXManager.instance.PlayRandomSound(swordSounds, transform, 1f);
         animator.SetTrigger("Attack");
         IsAttacking = true;
         attackBlocked = true;

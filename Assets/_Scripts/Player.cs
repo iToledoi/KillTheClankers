@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -18,29 +19,35 @@ public class Player : MonoBehaviour
     public float specialForce = 12f;
     public float specialCooldown = 2f;
     private bool specialReady = true;
+    private bool isDead = false;
 
     private WeaponParent weaponParent;
-    
 
+    // Subscribe to input events
     private void OnEnable()
     {
         meleeAttack.action.performed += PerformAttack;
         if (special != null)
             special.action.performed += PerformSpecial;
+
     }
 
+    // Unsubscribe from input events
     private void OnDisable()
     {
         meleeAttack.action.performed -= PerformAttack;
         if (special != null)
             special.action.performed -= PerformSpecial;
+
     }
 
+    // Perform melee attack via weapon parent
     private void PerformAttack(InputAction.CallbackContext obj)
     {
         weaponParent.MeleeAttack();
     }
 
+    //Get weapon parent component
     private void Awake()
     {
         weaponParent = GetComponentInChildren<WeaponParent>();
@@ -54,12 +61,14 @@ public class Player : MonoBehaviour
 
     }
 
+    // Special move: knockback enemies and reflect projectiles in a cone in front of player
     private void PerformSpecial(InputAction.CallbackContext obj)
     {
         if (!specialReady) return;
         StartCoroutine(DoSpecial());
     }
 
+    // Coroutine to handle special move logic and cooldown
     private IEnumerator DoSpecial()
     {
         specialReady = false;
@@ -158,4 +167,5 @@ public class Player : MonoBehaviour
         mousePos.z = Camera.main.nearClipPlane;
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
+
 }

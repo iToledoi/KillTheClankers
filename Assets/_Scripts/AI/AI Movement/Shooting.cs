@@ -13,9 +13,11 @@ public class Shooting : MonoBehaviour
     public GameObject owner;
 
     void Start()
-    {
+    {   
+        // Get Rigidbody2D component
         bulletRB = GetComponent<Rigidbody2D>();
 
+        // If target is set, shoot toward target
         if (target != null)
         {
             // Calculate direction toward player at the moment of firing
@@ -26,7 +28,7 @@ public class Shooting : MonoBehaviour
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
-
+        
         // Destroy bullet after 2 seconds to prevent clutter
         Destroy(this.gameObject, 4f);
     }
@@ -37,7 +39,7 @@ public class Shooting : MonoBehaviour
         // Ignore collisions with enemies if this bullet isn't allowed to damage them
         if (collision.CompareTag("Enemy") && !canDamageEnemies)
             return;
-
+            
         // Try to find a Health component on what we hit
         Health health = collision.GetComponent<Health>();
         if (health != null)
