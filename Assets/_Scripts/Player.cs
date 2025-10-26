@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     [Header("Special Move")]
     public float specialRange = 5f;
     [Tooltip("Half-angle of cone in degrees (e.g. 45 means 90 degree cone)")]
+
+    [SerializeField]
+    private AudioClip[] speacialSounds;
     public float specialHalfAngle = 45f;
     public float specialForce = 12f;
     public float specialCooldown = 2f;
@@ -75,7 +78,10 @@ public class Player : MonoBehaviour
 
         Vector2 origin = transform.position;
         Vector2 pointerWorld = GetPointerInput();
-        Vector2 forward = (pointerWorld - origin).normalized;
+        Vector2 forward = (pointerWorld - origin).normalized;   
+
+        // Play special sounds
+        SoundFXManager.instance.PlayRandomSound(speacialSounds, transform, 1f);
 
         // Find potential targets in radius
         Collider2D[] hits = Physics2D.OverlapCircleAll(origin, specialRange);
