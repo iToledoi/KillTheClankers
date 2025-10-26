@@ -45,6 +45,12 @@ public class Health : MonoBehaviour
             if (gameObject.CompareTag("Player"))
             {
                 SoundFXManager.instance.PlayRandomSound(playerDeathSounds, transform, 5f);
+                ScoreManager.instance.OnGameOver();
+                GameManager gm = FindObjectOfType<GameManager>();
+                if (gm != null)
+                {
+                    gm.GameOver();
+                }
             }
             isDead = true;
             Destroy(gameObject, 0.4f);

@@ -93,10 +93,12 @@ public class AIEnemy : MonoBehaviour
 
     }
 
-    // Called to mark the enemy as dead
+    // Called to mark the enemy as dead, plays death sound and adds to score
     private void killEnemy()
     {
         isDead = true;
         SoundFXManager.instance.PlayRandomSound(deathSounds, transform, 1f);
+        //Update UI score
+        ScoreManager.instance.AddScore();
     }
 }
