@@ -35,12 +35,26 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Initialize score display
         scoreText.text = score.ToString();
         finalScoreText.text = score.ToString();
+        
+        // Load and display high score
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScoreText.text = highScore.ToString();
-
-
+        
+        // Load and display best time
+        bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
+        if (bestTime > 0)
+        {
+            int minutes = Mathf.FloorToInt(bestTime / 60F);
+            int seconds = Mathf.FloorToInt(bestTime % 60);
+            bestTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+        else
+        {
+            bestTimeText.text = "00:00";
+        }
     }
     
     void Update()
@@ -75,6 +89,19 @@ public class ScoreManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(time / 60F);
             int seconds = Mathf.FloorToInt(time % 60);
             string timeStr = string.Format("{0:00}:{1:00}", minutes, seconds);
+            finalScoreText.text = score.ToString();
+        }
+
+        // Check if this is a new best time
+        if (time > bestTime)
+        {
+            bestTime = time;
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+            PlayerPrefs.Save(); // Force save immediately
+            
+            int minutes = Mathf.FloorToInt(bestTime / 60F);
+            int seconds = Mathf.FloorToInt(bestTime % 60);
+            bestTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }
 
