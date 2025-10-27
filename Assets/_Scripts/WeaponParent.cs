@@ -79,7 +79,7 @@ public class WeaponParent : MonoBehaviour
             return;
         }
         //play melee attack sounds here
-        SoundFXManager.instance.PlayRandomSound(swordSounds, transform, 1f);
+        SoundFXManager.instance.PlayRandomSound(swordSounds, transform, 0.5f);
         animator.SetTrigger("Attack");
         IsAttacking = true;
         attackBlocked = true;
