@@ -26,7 +26,7 @@ public class AIMovementNavMesh : MonoBehaviour
         }
         else
         {
-            // No targets detected — stop moving
+            // No targets detected stop moving
             if (agent.hasPath)
                 agent.ResetPath();
         }

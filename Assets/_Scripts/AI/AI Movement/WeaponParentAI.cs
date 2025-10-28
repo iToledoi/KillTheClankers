@@ -50,14 +50,18 @@ public class WeaponParentAI : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
         Vector2 scale = transform.localScale;
-        //depending on where pointer is facing, weapon will flip accordingly
+        //depending on where player is, flip both weapon and character sprites
         if (direction.x < 0)
         {
             scale.y = -1;
+            if (characterRenderer != null)
+                characterRenderer.flipX = true;
         }
         else if (direction.x > 0)
         {
             scale.y = 1;
+            if (characterRenderer != null)
+                characterRenderer.flipX = false;
         }
         transform.localScale = scale;
 
