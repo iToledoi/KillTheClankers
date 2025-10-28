@@ -13,6 +13,7 @@ public class KnockbackFeedback : MonoBehaviour
 
     public UnityEvent OnBegin, OnDone;
 
+    // Apply knockback force and play feedback
     public void PlayFeedback(GameObject sender)
     {
         StopAllCoroutines();
@@ -22,6 +23,7 @@ public class KnockbackFeedback : MonoBehaviour
         StartCoroutine(Reset());
     }
 
+    // Reset velocity after delay and invoke done event
     private IEnumerator Reset()
     {
         yield return new WaitForSeconds(delay);

@@ -14,8 +14,9 @@ public class Player : MonoBehaviour
 
     [Header("Special Move")]
     public float specialRange = 5f;
-    [Tooltip("Half-angle of cone in degrees (e.g. 45 means 90 degree cone)")]
+    [Tooltip("Half-angle of cone in degrees (* 45 means 90 degree cone)")]
 
+    //Special attack parameters
     [SerializeField]
     private AudioClip[] speacialSounds;
     public float specialHalfAngle = 45f;

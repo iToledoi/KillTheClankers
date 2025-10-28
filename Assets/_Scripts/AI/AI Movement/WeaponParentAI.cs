@@ -75,6 +75,7 @@ public class WeaponParentAI : MonoBehaviour
         }
     }
 
+    //For ranged weapons
     public void RangedAttack()
     {
         if (attackBlocked)
@@ -88,7 +89,7 @@ public class WeaponParentAI : MonoBehaviour
 
         //play ranged attack sounds here
         SoundFXManager.instance.PlayRandomSound(gunSounds, transform, 1f);
-            
+
         Shooting bulletScript = newBullet.GetComponent<Shooting>();
         if (bulletScript != null)
         {
@@ -96,6 +97,8 @@ public class WeaponParentAI : MonoBehaviour
         }
         StartCoroutine(DelayRangedAttack());
     }
+
+    //For melee weapons
     public void MeleeAttack()
     {
         if (attackBlocked)
@@ -108,18 +111,21 @@ public class WeaponParentAI : MonoBehaviour
         StartCoroutine(DelayAttack());
     }
 
+    //Coroutine to delay ranged attack
     private IEnumerator DelayRangedAttack()
     {
         yield return new WaitForSeconds(rangedDelay);
         attackBlocked = false;
     }
 
+    //Coroutine to delay melee attack
     private IEnumerator DelayAttack()
     {
         yield return new WaitForSeconds(meleeDelay);
         attackBlocked = false;
     }
 
+    //Visualize melee attack range in editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
@@ -127,7 +133,7 @@ public class WeaponParentAI : MonoBehaviour
         Gizmos.DrawWireSphere(position, radius);
     }
 
-    //For melee weapons
+    //For melee weapons to detect colliders in range
     public void DetectColliders()
     {
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrigin.position, radius))
