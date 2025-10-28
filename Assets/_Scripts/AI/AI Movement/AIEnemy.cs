@@ -7,19 +7,31 @@ public class AIEnemy : MonoBehaviour
     private NavMeshAgent agent;
     public Transform player;
     private WeaponParentAI weaponParent;
+    [SerializeField]
+    private Animator animator;
 
     [SerializeField]
     private bool ranged = true;
     [SerializeField]
     private float attackRange;
     private bool isDead = false;
+
+    //Audio clips
     [SerializeField]
     private AudioClip[] deathSounds;
+    [SerializeField]
+    private AudioClip[] walkingSounds;
+    [SerializeField, Range(0.1f, 2f)]
+    private float walkingSoundDelay = 0.4f;
+    private bool canPlayWalkSound = true;
 
     // Get weapon parent component
     private void Awake()
     {
         weaponParent = GetComponentInChildren<WeaponParentAI>();
+        // try to auto-assign animator if not set in inspector
+        if (animator == null)
+            animator = GetComponent<Animator>();
     }
 
     // Perform attack based on whether the enemy is ranged or melee
@@ -62,6 +74,8 @@ public class AIEnemy : MonoBehaviour
         // Do nothing if dead (stops dead enemies from moving or attacking)
         if (isDead)
         {
+            if (animator != null)
+                animator.SetBool("isMoving", false);
             return;
         }
 
@@ -91,10 +105,31 @@ public class AIEnemy : MonoBehaviour
 
         }
 
+        // Update animator movement parameter based on agent velocity
+        if (animator != null && agent != null)
+        {
+            float speedSq = agent.velocity.sqrMagnitude;
+            bool isMoving = speedSq > 0.01f;
+            animator.SetBool("isMoving", isMoving);
+
+            // Play walking sounds only when moving AND allowed by delay
+            if (isMoving && canPlayWalkSound && walkingSounds != null && walkingSounds.Length > 0)
+            {
+                canPlayWalkSound = false;
+                SoundFXManager.instance.PlayRandomSound(walkingSounds, transform, 0.6f);
+                StartCoroutine(WalkingSoundCooldown());
+            }
+        }
+    }
+
+    private IEnumerator WalkingSoundCooldown()
+    {
+        yield return new WaitForSeconds(walkingSoundDelay);
+        canPlayWalkSound = true;
     }
 
     // Called to mark the enemy as dead, plays death sound and adds to score
-    private void killEnemy()
+    public void killEnemy()
     {
         isDead = true;
         SoundFXManager.instance.PlayRandomSound(deathSounds, transform, 1f);

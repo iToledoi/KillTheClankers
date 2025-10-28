@@ -7,6 +7,11 @@ public class Crosshair : MonoBehaviour
 {
     public GameObject crosshairObject;
     private Vector3 targetPosition;
+    //Get Crosshairs collider if it has one
+    [SerializeField] private Collider2D crosshairCollider;
+
+    //Reference to jumpscareScreen in UI
+    [SerializeField] private GameObject jumpscareScreen;
 
     //Get initial position and hide system cursor
     void Start()
@@ -24,6 +29,25 @@ public class Crosshair : MonoBehaviour
         targetPosition.z = 0;
 
         crosshairObject.transform.position = targetPosition;
+    }
+
+
+    //JUST FOR FUN
+    //if collider is triggered, show jumpscare screen for 1 second
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("JumpscareTrigger"))
+        {
+            jumpscareScreen.SetActive(true);
+            StartCoroutine(HideJumpscareAfterDelay(1f));
+        }
+    }
+
+    // Coroutine to hide jumpscare screen after a delay
+    private IEnumerator HideJumpscareAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        jumpscareScreen.SetActive(false);
     }
 
 }

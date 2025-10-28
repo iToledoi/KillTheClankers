@@ -14,8 +14,15 @@ public class StartMenuScreen : MonoBehaviour
 
     public void SettingsButton()
     {
-        // Implement settings menu later
-        Debug.Log("Settings button clicked");
+        //freeze time
+        Time.timeScale = 0f;
+        //set SoundMenuCanvas active
+        GameObject.Find("SoundMenuCanvas").SetActive(true);
+        //set StartMenuCanvas inactive
+        gameObject.SetActive(false);
+        
+
+
     }
 
     public void QuitGameButton()
