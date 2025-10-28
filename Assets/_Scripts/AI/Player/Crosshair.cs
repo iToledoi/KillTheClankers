@@ -36,18 +36,15 @@ public class Crosshair : MonoBehaviour
     //if collider is triggered, show jumpscare screen for 1 second
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("JumpscareTrigger"))
-        {
-            jumpscareScreen.SetActive(true);
-            StartCoroutine(HideJumpscareAfterDelay(1f));
-        }
+            jumpscareScreen.gameObject.SetActive(true);
+            StartCoroutine(HideJumpscareAfterDelay(0.3f));
     }
 
     // Coroutine to hide jumpscare screen after a delay
     private IEnumerator HideJumpscareAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        jumpscareScreen.SetActive(false);
+        jumpscareScreen.gameObject.SetActive(false);
     }
 
 }

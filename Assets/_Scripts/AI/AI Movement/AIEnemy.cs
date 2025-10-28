@@ -3,13 +3,15 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class AIEnemy : MonoBehaviour
-{
+{   
+    // References
     private NavMeshAgent agent;
     public Transform player;
     private WeaponParentAI weaponParent;
     [SerializeField]
     private Animator animator;
 
+    // for ranged enemy
     [SerializeField]
     private bool ranged = true;
     [SerializeField]

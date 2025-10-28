@@ -7,7 +7,7 @@ public class AnimationEventRelay : MonoBehaviour
     // This function is called via animation event to notify the parent AIEnemy to handle death
     public void CallEnemyDeathParentFunction()
     {
-        // Example: Calls a "killEnemy" function on the parent object
+        // Calls "killEnemy" function on the parent object
         GetComponentInParent<AIEnemy>()?.killEnemy();
     }
 }

@@ -41,16 +41,22 @@ public class WeaponParent : MonoBehaviour
         transform.right = direction;
 
         Vector2 scale = transform.localScale;
-        //depending on where pointer is facing, weapon will flip accordingly
+        //depending on where pointer is facing, flip both weapon and character sprites
         if(direction.x < 0)
         {
             scale.y = -1;
+            if (characterRenderer != null)
+                characterRenderer.flipX = true;
+                
         }else if(direction.x > 0)
         {
             scale.y = 1;
+            if (characterRenderer != null)
+                characterRenderer.flipX = false;
         }
         transform.localScale = scale;
 
+        //Adjust weapon sorting order based on angle
         if(transform.eulerAngles.z > 0 && transform.eulerAngles.z < 180) 
         {
             weaponRenderer.sortingOrder = characterRenderer.sortingOrder - 1;
@@ -60,7 +66,7 @@ public class WeaponParent : MonoBehaviour
             weaponRenderer.sortingOrder = characterRenderer.sortingOrder + 1;
         }
     }
-
+    // Ranged attack: shoot projectile towards pointer
     public void RangedAttack()
     {
         if (attackBlocked)
@@ -72,6 +78,8 @@ public class WeaponParent : MonoBehaviour
         attackBlocked = true;
         StartCoroutine(DelayRangedAttack());
     }
+
+    // Melee attack: swing sword in front of player
     public void MeleeAttack()
     {
         if (attackBlocked)
@@ -86,18 +94,21 @@ public class WeaponParent : MonoBehaviour
         StartCoroutine(DelayAttack());
     }
 
+    // Delay between ranged attacks
     private IEnumerator DelayRangedAttack()
     {
         yield return new WaitForSeconds(rangedDelay);
         attackBlocked = false;
     }
 
+    // Delay between melee attacks
     private IEnumerator DelayAttack()
     {
         yield return new WaitForSeconds(meleeDelay);
         attackBlocked = false;
     }
 
+    // Visualize melee attack radius in editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
@@ -105,6 +116,7 @@ public class WeaponParent : MonoBehaviour
         Gizmos.DrawWireSphere(position, radius);
     }
 
+    // Detect colliders within melee attack radius and apply damage
     public void DetectColliders()
     {
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrigin.position, radius))

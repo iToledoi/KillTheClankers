@@ -27,13 +27,15 @@ public class Health : MonoBehaviour
     public void GetHit(int amount, GameObject sender)
     {
 
+        // Ignore hits if already dead or hit by same layer
         if (isDead)
             return;
         if (sender.layer == gameObject.layer)
             return;
 
         currentHealth -= amount;
-
+        
+        // Trigger appropriate event based on health status
         if (currentHealth > 0)
         {
             OnHitWithReference?.Invoke(sender);
