@@ -1,0 +1,18 @@
+AutomaKiller
+
+I am proud of several aspects of my game, but most importantly the behavior of Enemies as I spent the most time on that.
+I used the Navmesh tools to help path the enmemies to the player at all times and stop once they are in firing range to 
+shoot at the Player.
+I am also proud of the special attack ability where you can push back objects using the force including enemies and their
+projectiles that when colliding back at them, will kill them.
+
+As I made the 2D project, there were some features that I did not implement from the original write up.
+I did not incorporate the player's choice to choose either a melee weapon or ranged weapon as I stuck the player 
+with the melee sword due to time constraints. So none of the player's ranged weapon abilities were implemented either.
+I decided to keep the gameplay HUD simple and only included the number of enemies killed while leaving out specific cooldowns.
+
+Even though I did not implement some of these features, I wrote my code with these features in mind later down the line
+to be easily implemented with more time. 
+One of the features that I did not include in the write up was creating variety of enemy types because I knew the limitations 
+of making this game in a month but did include the bones of that feature for future implementation. 
+
